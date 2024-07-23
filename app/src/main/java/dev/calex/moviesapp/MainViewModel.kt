@@ -1,5 +1,6 @@
 package dev.calex.moviesapp
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,10 +28,17 @@ class MainViewModel : ViewModel() {
             }catch (e: Exception){
                 _movieState.value = _movieState.value.copy(
                     loading = false,
-                    error = "Something went wrong! Error: ${e.message}"
+                    error = "Something went wrong! The MovieDB is currently unavailable!"
                 )
+                Log.d("API_Unavailable", "${e.message}")
             }
         }
     }
 
 }
+
+data class MovieState(
+    val loading: Boolean = true,
+    val list: List<Movie> = emptyList(),
+    val error: String? = null
+)
